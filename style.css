@@ -1,0 +1,78 @@
+body {
+    height: 100%;
+  }
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+form {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+}
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+input[type="file"] {
+    margin-bottom: 20px;
+}
+input[type="submit"] {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+input[type="submit"]:hover {
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #333;
+}
+
+.wrapper {
+    min-height: 100%;
+    margin-bottom: -60px; /* Sesuaikan dengan tinggi footer */
+  }
+  
+  .footer {
+    height: 60px; /* Sesuaikan dengan tinggi footer */
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  /* Atur margin bottom pada wrapper agar sama dengan tinggi footer */
+  .wrapper:after {
+    content: "";
+    display: block;
+    height: 60px; /* Sesuaikan dengan tinggi footer */
+  }
+  
+  /* Tambahkan CSS berikut ini */
+  main {
+    padding-bottom: 60px; /* Sesuaikan dengan tinggi footer */
+  }
+
+
+/* =========================================================================================== */
+table {
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid black;
+  padding: 5px;
+}
