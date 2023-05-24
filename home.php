@@ -13,41 +13,115 @@
             border: 1px solid black;
             padding: 5px;
         }
+
+        .empty-cell {
+        border: 1px solid #000;
+    }
     </style>
 </head>
 <body>
     <form id="upload-form" action="upload.php" method="post" enctype="multipart/form-data">
         <label for="file">Pilih File:</label>
         <input type="file" id="file" name="file" accept=".xls" onchange="handleFile(event)">
-        <div id="file-data"></div><br>
-		<div id="file-data2"></div>
+        <div id="file-data1"></div><br>
+		<div id="file-data2"></div><br>
+        <div id="file-data0"></div>
         <input type="submit" value="Upload">
 		
     </form>
 
     <script>
         
-    function handleFile(e) {
-        var file = e.target.files[0];
-        var reader = new FileReader();
+    
+    
+   function handleFile(e) {
+    var file = e.target.files[0];
+    var reader = new FileReader();
 
-        reader.onload = function (e) {
-            var data = new Uint8Array(e.target.result);
-            var workbook = XLSX.read(data, { type: 'array' });
+    reader.onload = function (e) {
+        var data = new Uint8Array(e.target.result);
+        var workbook = XLSX.read(data, { type: 'array' });
 
-            var html1 = generateTable(workbook, 0, 'lokasiManuverBebas', 'installManuverBebas');
-            document.getElementById('file-data').innerHTML = html1;
+        var sheetName0 = "PENGAWAS";
+        var html0 = generateTablePengawas(workbook, sheetName0,'lokasiPembebasan');
+        document.getElementById('file-data0').innerHTML = html0;
 
-            var html2 = generateTable(workbook, 1, 'lokasiManuverNormal', 'installManuverNormal');
-            document.getElementById('file-data2').innerHTML = html2;
-        };
+        var sheetName1 = "PEMBEBASAN";
+        var html1 = generateTable(workbook, sheetName1, 'lokasiManuverBebas', 'installManuverBebas');
+        document.getElementById('file-data1').innerHTML = html1;
 
-        reader.readAsArrayBuffer(file);
+        var sheetName2 = "PENORMALAN";
+        var html2 = generateTable(workbook, sheetName2,  'lokasiManuverNormal', 'installManuverNormal');
+        document.getElementById('file-data2').innerHTML = html2;
+    };
+
+    reader.readAsArrayBuffer(file);
+}
+
+    function generateTablePengawas(workbook, sheetName,lokasiName) {
+        var sheet = workbook.Sheets[sheetName];
+
+        if (!sheet) {
+        alert('Lembar kerja ' + sheetName + ' tidak ditemukan');
+        // Tambahkan kode untuk menampilkan notifikasi di sini
+        return '';
+        }
+
+        var jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+        if (jsonData.length === 0) {
+        alert('Lembar kerja ' + sheetName + ' kosong');
+        // Tambahkan kode untuk menampilkan notifikasi di sini
+        return '';
+        }
+
+        var html = '<table border="1">';
+        html += '<tr>';
+        html += '<th>Lokasi</th>';
+        html += '<th>Peng. Pekerjaan</th>';
+        html += '<th>Peng. Manuver</th>';
+        html += '<th>Peng. K3</th>';
+        html += '<th>Spv GITET</th>';
+        html += '<th>Opr GITET</th>';
+        html += '</tr>';
+
+        for (var i = 0; i < jsonData.length; i++) {
+        html += '<tr>';
+        for (var j = 0; j < 6; j++) {
+            var cellValue = '';
+            if (j === 0 && jsonData[i][0]) {
+                cellValue = jsonData[i][0];
+                html += '<td><input type="text" name="' + lokasiName + '[]" value="' + cellValue + '"></td>';
+            } else {
+                html += '<td></td>';
+            }
+        }
+        html += '</tr>';
+    }
+        html += '</table>';
+
+        return html;
     }
 
-    function generateTable(workbook, sheetIndex, lokasiName, installName) {
-        var sheet = workbook.Sheets[workbook.SheetNames[sheetIndex]];
+
+
+
+    function generateTable(workbook, sheetName, lokasiName, installName) {
+        var sheet = workbook.Sheets[sheetName];
+
+        if (!sheet) {
+        alert('Lembar kerja ' + sheetName + ' tidak ditemukan');
+        // Tambahkan kode untuk menampilkan notifikasi di sini
+        return '';
+        }
+
         var jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+        if (jsonData.length === 0) {
+        alert('Lembar kerja ' + sheetName + ' kosong');
+        // Tambahkan kode untuk menampilkan notifikasi di sini
+        return '';
+        }
 
         var html = '<table>';
         html += '<thead>';
@@ -96,6 +170,7 @@
 
         return html;
     }
+
 
 
 
