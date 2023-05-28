@@ -76,3 +76,16 @@ table, th, td {
   border: 1px solid black;
   padding: 5px;
 }
+
+/* ================================================================================================ */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 kolom dengan lebar yang sama */
+  grid-gap: 10px; /* Jarak antara item */
+}
+
+.item {
+  background-color: #f2f2f2;
+  padding: 10px;
+  text-align: center;
+}

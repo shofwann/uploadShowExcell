@@ -18,6 +18,7 @@
         border: 1px solid #000;
     }
     </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <form id="upload-form" action="upload.php" method="post" enctype="multipart/form-data">
@@ -26,6 +27,19 @@
         <div id="file-data1"></div><br>
 		<div id="file-data2"></div><br>
         <div id="file-data0"></div>
+        <div id="file-data3"></div>
+
+        <div class="grid-container">
+            <div class="item">11111111</div>
+            <div class="item">11111111</div>
+            <div class="item">2222</div>
+            <div class="item">2222</div>
+            <div class="item">333333</div>
+            <div class="item">333333</div>
+            <div class="item">444444</div>
+            <div class="item">444444</div>
+        </div>
+
         <input type="submit" value="Upload">
 		
     </form>
@@ -53,6 +67,9 @@
         var sheetName2 = "PENORMALAN";
         var html2 = generateTable(workbook, sheetName2,  'lokasiManuverNormal', 'installManuverNormal');
         document.getElementById('file-data2').innerHTML = html2;
+
+        var html3 = generateTableEmpty(workbook, sheetName0);
+        document.getElementById('file-data3').innerHTML = html3;
     };
 
     reader.readAsArrayBuffer(file);
@@ -104,6 +121,35 @@
     }
 
 
+    function generateTableEmpty(workbook, sheetName) {
+        var sheet = workbook.Sheets[sheetName];
+        var jsonData = XLSX.utils.sheet_to_json(sheet, {headers: 1});
+
+        var html = '<table>';
+        html += '<thead>';
+        html += '<tr>';
+        html += '<th>Spv GITET</th>';
+        html += '<th>Opr GITET</th>';
+        html += '</tr>';
+        html += '</thead>';
+        html += '<tbody>';
+
+        // Loop untuk membuat baris tabel kosong
+        for (var i = 0; i < 3; i++) {
+            html += '<tr>';
+            for (var j = 0; j < 2; j++) {
+            html += '<td style="height: 20px;"></td>';
+        }
+        html += '</tr>';
+        }
+
+        html += '</tbody>';
+        html += '</table>';
+
+        return html;
+
+
+    }
 
 
     function generateTable(workbook, sheetName, lokasiName, installName) {
