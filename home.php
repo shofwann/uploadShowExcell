@@ -1,3 +1,20 @@
+<?php 
+    if( isset($_POST["submit"]) ){
+        var_dump($_POST); die();
+    }
+
+
+
+
+?>
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,26 +38,70 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <form id="upload-form" action="upload.php" method="post" enctype="multipart/form-data">
+    <form id="upload-form" action="" method="post" enctype="multipart/form-data">
         <label for="file">Pilih File:</label>
         <input type="file" id="file" name="file" accept=".xls" onchange="handleFile(event)">
-        <div id="file-data1"></div><br>
-		<div id="file-data2"></div><br>
-        <div id="file-data0"></div>
-        <div id="file-data3"></div>
+        
+		<br>
+        
+        
 
         <div class="grid-container">
-            <div class="item">11111111</div>
-            <div class="item">11111111</div>
-            <div class="item">2222</div>
-            <div class="item">2222</div>
-            <div class="item">333333</div>
-            <div class="item">333333</div>
-            <div class="item">444444</div>
-            <div class="item">444444</div>
+            <div class="item1">
+                <table class="target">
+                    <tr>
+                        <th>Lokasi</th>
+                        <th>Peng. Pekerjaan</th>
+                        <th>Peng. Manuver</th>
+                        <th>Peng. K3</th>
+                        <th>Spv GITET</th>
+                        <th>Opr GITET</th>
+                    </tr>
+                </table>
+                <div id="file-data0">
+            </div></div>
+            <div class="item2">
+                <table class="target">
+                    <tr>
+                        <th>Spv GITET</th>
+                        <th>Opr GITET</th>
+                    </tr>
+                </table>
+                <div id="file-data3"></div>
+            </div>
+            <div class="item3">3</div>
+            <div class="item4">
+                <table class="target">
+                    <tr>
+                        <th>NO</th>
+                        <th>Lokasi</th>
+                        <th>real</th>
+                        <th>remote</th>
+                        <th>ADS</th>
+                        <th>Installasi</th>
+                    </tr>
+                </table>
+                <div id="file-data1"></div>
+            </div>
+            <div class="item5">5</div>
+            <div class="item6">
+                <table class="target">
+                    <tr>
+                        <th>NO</th>
+                        <th>Lokasi</th>
+                        <th>real</th>
+                        <th>remote</th>
+                        <th>ADS</th>
+                        <th>Installasi</th>
+                    </tr>
+                </table>
+                <div id="file-data2"></div>
+            </div>
         </div>
 
-        <input type="submit" value="Upload">
+        <div class='submit' hidden>
+            <input type="submit" name="submit" value="Upload">
+        </div>
 		
     </form>
 
@@ -70,6 +131,18 @@
 
         var html3 = generateTableEmpty(workbook, sheetName0);
         document.getElementById('file-data3').innerHTML = html3;
+
+        var submitElement = document.querySelector('.submit');
+        submitElement.removeAttribute('hidden');
+
+        var targetElement = document.querySelectorAll('.target');
+        console.log(targetElement);
+        targetElement.forEach(function(element) {
+            element.setAttribute('hidden', 'true');
+        });
+
+        
+        
     };
 
     reader.readAsArrayBuffer(file);
