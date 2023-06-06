@@ -1,6 +1,20 @@
 <?php 
+
+    require "function.php";
+
     if( isset($_POST["submit"]) ){
-        var_dump($_POST); die();
+        if (tambah($_POST) > 0) {
+            echo "<script>
+                alert('data berhasil disubmit'); 
+                document.location.href = 'home.php';
+                </script>
+                ";  
+        } else {
+            echo "<script>
+                alert('data error'); 
+                document.location.href = 'home.php';
+                </script>";
+        }
     }
 
 
