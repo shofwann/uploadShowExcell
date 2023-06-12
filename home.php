@@ -34,7 +34,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Upload dan Tampilkan File Excel</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <script src="xlsx.full.min.js"></script>
     <style>
         table {
             border-collapse: collapse;
@@ -126,11 +126,12 @@
    function handleFile(e) {
     var file = e.target.files[0];
     var reader = new FileReader();
-
+    
     reader.onload = function (e) {
         var data = new Uint8Array(e.target.result);
         var workbook = XLSX.read(data, { type: 'array' });
-
+        console.log(workbook);
+        
         var sheetName0 = "PENGAWAS";
         var html0 = generateTablePengawas(workbook, sheetName0,'lokasiPembebasan');
         document.getElementById('file-data0').innerHTML = html0;
@@ -150,7 +151,7 @@
         submitElement.removeAttribute('hidden');
 
         var targetElement = document.querySelectorAll('.target');
-        console.log(targetElement);
+        
         targetElement.forEach(function(element) {
             element.setAttribute('hidden', 'true');
         });
